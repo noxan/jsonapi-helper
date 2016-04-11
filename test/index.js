@@ -11,7 +11,9 @@ test('schema object has serialize method', async t => {
 
 test('schema serialize returns an object', async t => {
   const schema = new Schema({});
-  const result = schema.serialize();
+  const result = schema.serialize({
+    id: 1,
+  });
 
   t.truthy(result);
   t.is(typeof result, "object");
@@ -19,7 +21,9 @@ test('schema serialize returns an object', async t => {
 
 test('schema serialize result should match basic jsonapi requirements', async t => {
   const schema = new Schema({});
-  const result = schema.serialize();
+  const result = schema.serialize({
+    id: 1,
+  });
 
   t.true('id' in result);
   t.true('links' in result);
