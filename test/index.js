@@ -27,9 +27,10 @@ test('schema serialize result should match basic jsonapi requirements', async t 
 
   t.true('links' in result);
   t.true('data' in result);
-  t.true('id' in result.data);
-  t.true('type' in result.data);
-  t.true('attributes' in result.data);
+  t.is(result.data.length, 1);
+  t.true('id' in result.data[0]);
+  t.true('type' in result.data[0]);
+  t.true('attributes' in result.data[0]);
 });
 
 test('schema serialze should take at least 1 parameter', async t => {
@@ -44,7 +45,7 @@ test('schema serialize should have the proper id of the source obj', async t => 
     id: 5,
   });
 
-  t.is(result.data.id, 5);
+  t.is(result.data[0].id, 5);
 });
 
 test('schema serialize should have the proper type of the schema', async t => {
@@ -55,7 +56,7 @@ test('schema serialize should have the proper type of the schema', async t => {
     id: 5,
   });
 
-  t.is(result.data.type, 'objs');
+  t.is(result.data[0].type, 'objs');
 });
 
 test('schema serialize should have the proper type of the schema', async t => {
@@ -68,6 +69,6 @@ test('schema serialize should have the proper type of the schema', async t => {
     NAME: 'Because strange api key format.',
   });
 
-  t.is(typeof result.data.attributes, 'object');
-  t.is(result.data.attributes.name, 'Because strange api key format.');
+  t.is(typeof result.data[0].attributes, 'object');
+  t.is(result.data[0].attributes.name, 'Because strange api key format.');
 });

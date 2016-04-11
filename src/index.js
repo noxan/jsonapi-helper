@@ -20,11 +20,11 @@ export default class Schema {
 
     return {
       links: {},
-      data: {
+      data: [{
         type: this.definition.type,
         id: obj[this.definition.id],
         attributes: attributes,
-      }
+      }],
     }
   }
 }
