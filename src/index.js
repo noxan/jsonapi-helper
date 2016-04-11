@@ -54,7 +54,7 @@ export default class Schema {
 
     return {
       links: {},
-      data: data,
+      data: data.length === 1 ? data[0] : data,
     }
   }
 }
