@@ -57,3 +57,17 @@ test('schema serialize should have the proper type of the schema', async t => {
 
   t.is(result.data.type, 'objs');
 });
+
+test('schema serialize should have the proper type of the schema', async t => {
+  const schema = new Schema({
+    attributes: {
+      name: 'NAME',
+    },
+  });
+  const result = schema.serialize({
+    NAME: 'Because strange api key format.',
+  });
+
+  t.is(typeof result.data.attributes, 'object');
+  t.is(result.data.attributes.name, 'Because strange api key format.');
+});
