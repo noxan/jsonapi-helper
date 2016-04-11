@@ -28,6 +28,7 @@ test('schema serialize result should match basic jsonapi requirements', async t 
   t.true('links' in result);
   t.true('data' in result);
   t.true('id' in result.data);
+  t.true('type' in result.data);
   t.true('attributes' in result.data);
 });
 
