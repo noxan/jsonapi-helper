@@ -25,3 +25,9 @@ test('schema serialize result should match basic jsonapi requirements', async t 
   t.true('links' in result);
   t.true('attributes' in result);
 });
+
+test('schema serialze should take at least 1 parameter', async t => {
+  const schema = new Schema();
+
+  t.is(schema.serialize.length, 1);
+});

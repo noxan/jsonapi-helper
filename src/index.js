@@ -1,5 +1,5 @@
 export default class Schema {
-  serialize() {
+  serialize(obj) {
     return {
       id: '',
       links: {},
