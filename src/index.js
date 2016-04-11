@@ -5,6 +5,7 @@ export default class Schema {
     }
     this.definition = {
       id: definition.id || 'id',
+      type: definition.type,
     };
   }
 
@@ -12,7 +13,7 @@ export default class Schema {
     return {
       links: {},
       data: {
-        type: '',
+        type: this.definition.type,
         id: obj[this.definition.id],
         attributes: {},
       }
