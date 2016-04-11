@@ -12,6 +12,7 @@ export default class Schema {
     return {
       links: {},
       data: {
+        type: '',
         id: obj[this.definition.id],
         attributes: {},
       }
