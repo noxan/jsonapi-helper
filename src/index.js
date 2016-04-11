@@ -27,9 +27,16 @@ export default class Schema {
       }
     });
 
+    let id = this.definition.id;
+    if (typeof id === 'function') {
+      id = id(obj);
+    } else {
+      id = obj[this.definition.id];
+    }
+
     return {
       type: this.definition.type,
-      id: obj[this.definition.id],
+      id: id,
       attributes: attributes,
     };
   }
