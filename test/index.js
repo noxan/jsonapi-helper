@@ -4,13 +4,13 @@ import Schema from '../src';
 
 
 test('schema object has serialize method', async t => {
-  const schema = new Schema();
+  const schema = new Schema({});
 
   t.truthy(schema.serialize);
 });
 
 test('schema serialize returns an object', async t => {
-  const schema = new Schema();
+  const schema = new Schema({});
   const result = schema.serialize();
 
   t.truthy(result);
@@ -18,7 +18,7 @@ test('schema serialize returns an object', async t => {
 });
 
 test('schema serialize result should match basic jsonapi requirements', async t => {
-  const schema = new Schema();
+  const schema = new Schema({});
   const result = schema.serialize();
 
   t.true('id' in result);
@@ -27,7 +27,7 @@ test('schema serialize result should match basic jsonapi requirements', async t 
 });
 
 test('schema serialze should take at least 1 parameter', async t => {
-  const schema = new Schema();
+  const schema = new Schema({});
 
   t.is(schema.serialize.length, 1);
 });
