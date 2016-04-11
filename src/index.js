@@ -3,11 +3,14 @@ export default class Schema {
     if (definition === undefined) {
       throw new Error('You have to provide a schema definition as parameter.');
     }
+    this.definition = {
+      id: definition.id || 'id',
+    };
   }
 
   serialize(obj) {
     return {
-      id: '',
+      id: obj[this.definition.id],
       links: {},
       attributes: {},
     }
