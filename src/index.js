@@ -1,3 +1,6 @@
+import camelCaseToDashed from './camel-case-to-dashed';
+
+
 export default class Schema {
   constructor(definition) {
     if (definition === undefined) {
@@ -15,11 +18,12 @@ export default class Schema {
 
     Object.keys(this.definition.attributes).forEach(targetKey => {
       const source = this.definition.attributes[targetKey];
+      const target = camelCaseToDashed(targetKey);
 
       if (typeof source === 'function') {
-        attributes[targetKey] = source(obj);
+        attributes[target] = source(obj);
       } else {
-        attributes[targetKey] = obj[source];
+        attributes[target] = obj[source];
       }
     });
 
