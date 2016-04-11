@@ -14,8 +14,13 @@ export default class Schema {
     const attributes = {};
 
     Object.keys(this.definition.attributes).forEach(targetKey => {
-      const sourceKey = this.definition.attributes[targetKey];
-      attributes[targetKey] = obj[sourceKey];
+      const source = this.definition.attributes[targetKey];
+
+      if (typeof source === 'function') {
+        attributes[targetKey] = source(obj);
+      } else {
+        attributes[targetKey] = obj[source];
+      }
     });
 
     return {
