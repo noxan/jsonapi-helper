@@ -10,9 +10,11 @@ export default class Schema {
 
   serialize(obj) {
     return {
-      id: obj[this.definition.id],
       links: {},
-      attributes: {},
+      data: {
+        id: obj[this.definition.id],
+        attributes: {},
+      }
     }
   }
 }

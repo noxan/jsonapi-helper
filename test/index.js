@@ -25,9 +25,10 @@ test('schema serialize result should match basic jsonapi requirements', async t 
     id: 1,
   });
 
-  t.true('id' in result);
   t.true('links' in result);
-  t.true('attributes' in result);
+  t.true('data' in result);
+  t.true('id' in result.data);
+  t.true('attributes' in result.data);
 });
 
 test('schema serialze should take at least 1 parameter', async t => {
@@ -43,5 +44,5 @@ test('schema serialize should have the proper id of the source obj', async t => 
     id: 5,
   });
 
-  t.is(result.id, 5);
+  t.is(result.data.id, 5);
 });
