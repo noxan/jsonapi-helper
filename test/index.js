@@ -31,3 +31,13 @@ test('schema serialze should take at least 1 parameter', async t => {
 
   t.is(schema.serialize.length, 1);
 });
+
+
+test('schema serialize should have the proper id of the source obj', async t => {
+  const schema = new Schema({});
+  const result = schema.serialize({
+    id: 5,
+  });
+
+  t.is(result.id, 5);
+});
