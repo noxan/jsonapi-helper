@@ -27,15 +27,23 @@ export default class Schema {
       type: this.definition.type,
       id: obj[this.definition.id],
       attributes: attributes,
-    }
+    };
   }
 
-  serialize(obj) {
+  serialize(objectOrArray) {
+    const data = [];
+
+    if (objectOrArray.length === undefined) {
+      data.push(this.serializeObj(objectOrArray));
+    } else {
+      objectOrArray.forEach(obj => {
+        data.push(this.serializeObj(obj));
+      });
+    }
+
     return {
       links: {},
-      data: [
-        this.serializeObj(obj),
-      ],
+      data: data,
     }
   }
 }
