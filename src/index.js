@@ -10,7 +10,7 @@ export default class Schema {
     };
   }
 
-  serialize(obj) {
+  serializeObj(obj) {
     const attributes = {};
 
     Object.keys(this.definition.attributes).forEach(targetKey => {
@@ -24,12 +24,18 @@ export default class Schema {
     });
 
     return {
+      type: this.definition.type,
+      id: obj[this.definition.id],
+      attributes: attributes,
+    }
+  }
+
+  serialize(obj) {
+    return {
       links: {},
-      data: [{
-        type: this.definition.type,
-        id: obj[this.definition.id],
-        attributes: attributes,
-      }],
+      data: [
+        this.serializeObj(obj),
+      ],
     }
   }
 }
