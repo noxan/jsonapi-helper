@@ -4,3 +4,6 @@ npm-debug.log
 
 # vim
 *.sw[op]
+
+# build result
+/lib/
