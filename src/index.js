@@ -10,6 +10,7 @@ export default class Schema {
       id: definition.id || 'id',
       type: definition.type,
       attributes: definition.attributes || {},
+      relationships: definition.relationships || {},
     };
   }
 
@@ -37,10 +38,14 @@ export default class Schema {
 
     const id = this.resolveIdField(this.definition, obj);
 
+    // relationships
+    const relationships = {};
+
     return {
       type: this.definition.type,
       id: id,
       attributes: attributes,
+      relationships: relationships,
     };
   }
 
