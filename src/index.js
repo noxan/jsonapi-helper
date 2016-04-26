@@ -13,6 +13,14 @@ export default class Schema {
     };
   }
 
+  resolveIdField(definition, obj) {
+    if (typeof definition.id === 'function') {
+      return definition.id(obj);
+    } else {
+      return obj[definition.id];
+    }
+  }
+
   serializeObj(obj) {
     const attributes = {};
 
@@ -27,12 +35,7 @@ export default class Schema {
       }
     });
 
-    let id = this.definition.id;
-    if (typeof id === 'function') {
-      id = id(obj);
-    } else {
-      id = obj[this.definition.id];
-    }
+    const id = this.resolveIdField(this.definition, obj);
 
     return {
       type: this.definition.type,
