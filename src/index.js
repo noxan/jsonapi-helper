@@ -40,6 +40,18 @@ export default class Schema {
 
     // relationships
     const relationships = {};
+    Object.keys(this.definition.relationships).forEach(key => {
+      const relationshipDefinition = this.definition.relationships[key];
+      relationships[key] = {
+        data: {
+          type: relationshipDefinition.schema.definition.type,
+          id: this.resolveIdField(relationshipDefinition, obj),
+        },
+        links: {
+          related: '/api/images',
+        },
+      };
+    });
 
     return {
       type: this.definition.type,
