@@ -47,9 +47,6 @@ export default class Schema {
           type: relationshipDefinition.schema.definition.type,
           id: this.resolveIdField(relationshipDefinition, obj),
         },
-        links: {
-          related: '/api/images',
-        },
       };
     });
 
