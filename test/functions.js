@@ -14,5 +14,5 @@ test('schema object has serialize method', async t => {
     lastName: 'World',
   });
 
-  t.is(result.data[0].attributes.name, 'Hello World');
+  t.is(result.data.attributes.name, 'Hello World');
 });

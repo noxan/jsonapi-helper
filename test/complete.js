@@ -21,10 +21,10 @@ test('serialize complete basic object', async t => {
 
   t.deepEqual(result, {
     links: {},
-    data: [{
+    data: {
       type: 'objs',
       id: '5',
       attributes: { name: 'Hello' }
-    }],
+    },
   });
 });
