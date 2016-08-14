@@ -1,6 +1,6 @@
 {
   "name": "jsonapi-helper",
-  "version": "0.3.0-dev.20160428",
+  "version": "0.3.0-dev.20160815",
   "description": "Prototype of a minimalistic json api serializer.",
   "main": "lib/index.js",
   "scripts": {
