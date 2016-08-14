@@ -53,12 +53,18 @@ export default class Schema {
       };
     });
 
-    return {
+    const result = {
       type: this.definition.type,
       id: id,
       attributes: attributes,
-      relationships: relationships,
     };
+
+    // do not serialize empty object
+    if (relationships && Object.keys(relationships).length > 0) {
+      result.relationships = relationships;
+    }
+
+    return result;
   }
 
   serialize(objectOrArray) {
