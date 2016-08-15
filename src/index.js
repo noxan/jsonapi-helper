@@ -48,7 +48,14 @@ export default class Schema {
       // ensure we have an array of objects in the end or empty object if value was undefined before
       const relationshipData = Array.isArray(obj[key] || []) ? obj[key] || [] : [obj[key]];
 
-      const data = relationshipData.map(relationshipObject => this.serializeRelationship(relationship, relationshipObject, obj));
+      let data = relationshipData.map(relationshipObject => this.serializeRelationship(relationship, relationshipObject, obj));
+      // try to call serialize relationship directly and see if someone uses the parentObject to build the relationship
+      if (Array.isArray(data) && data.length === 0) {
+        const directData = this.serializeRelationship(relationship, relationshipData, obj);
+        if (directData.id) {
+          data = directData;
+        }
+      }
       if (data.length === 1) {
         relationships[key] = { data: data[0] };
       } else {

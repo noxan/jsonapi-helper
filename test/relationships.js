@@ -115,3 +115,27 @@ test('serialize relationship without defined key in object', async t => {
 
   t.deepEqual(result.data.relationships.elements.data, []);
 });
+
+test('serialize relationship without defined key in object', async t => {
+  const obj = {
+    id: '5',
+    imageId: 4,
+  };
+
+  const objSchema3 = new Schema({
+    type: 'objs',
+    relationships: {
+      image: {
+        type: 'images',
+        id: (obj, parentObj) => parentObj.imageId,
+      }
+    },
+  });
+
+  const result = objSchema3.serialize(obj);
+
+  t.deepEqual(result.data.relationships.image.data, {
+    type: 'images',
+    id: 4,
+  });
+});
