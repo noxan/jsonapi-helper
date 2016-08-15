@@ -14,9 +14,9 @@ export default class Schema {
     };
   }
 
-  resolveIdField(definition, obj) {
+  resolveIdField(definition, obj, parentObj) {
     if (typeof definition.id === 'function') {
-      return definition.id(obj);
+      return definition.id(obj, parentObj);
     } else {
       return obj[definition.id];
     }
@@ -47,9 +47,9 @@ export default class Schema {
       const relatedData = obj[key];
       let data;
       if (Array.isArray(relatedData)) {
-        data = relatedData.map(data => this.serializeRelationship(relationship, data));
+        data = relatedData.map(data => this.serializeRelationship(relationship, data, obj));
       } else {
-        data = this.serializeRelationship(relationship, relatedData);
+        data = this.serializeRelationship(relationship, relatedData, obj);
       }
       relationships[key] = {
         data: data,
@@ -70,10 +70,10 @@ export default class Schema {
     return result;
   }
 
-  serializeRelationship(relationship, relatedData) {
+  serializeRelationship(relationship, relatedData, obj) {
     return {
       type: relationship.type,
-      id: this.resolveIdField(relationship, relatedData),
+      id: this.resolveIdField(relationship, relatedData, obj),
     };
   }
 
