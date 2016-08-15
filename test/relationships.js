@@ -42,3 +42,32 @@ test('serialize complete object with relationship', async t => {
     },
   });
 });
+
+test('serialize relationship with id resolve function', async t => {
+  const obj = {
+    id: '5',
+    elements: [
+      { name: 'tdcaw' },
+      { name: 'oyqm' }
+    ],
+  };
+
+  const objSchema = new Schema({
+    type: 'objs',
+    relationships: {
+      elements: {
+        type: 'somethings',
+        id: el => el.name,
+      }
+    },
+  });
+
+  const result = objSchema.serialize(obj);
+
+  console.log(result.data.relationships.elements.data);
+
+  t.deepEqual(result.data.relationships.elements.data, [
+    { type: 'somethings', id: 'tdcaw' },
+    { type: 'somethings', id: 'oyqm' }
+  ]);
+});
