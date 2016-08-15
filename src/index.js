@@ -44,7 +44,11 @@ export default class Schema {
       const relationship = this.definition.relationships[key];
       // TODO: support for definitions in relationships
       // const relationshipDefinition = this.definition.relationships[key];
-      const data = obj[key].map(data => this.serializeRelationship(relationship, data, obj));
+
+      // ensure we have an array of objects in the end or empty object if value was undefined before
+      const relationshipData = Array.isArray(obj[key] || []) ? obj[key] || [] : [obj[key]];
+
+      const data = relationshipData.map(relationshipObject => this.serializeRelationship(relationship, relationshipObject, obj));
       if (data.length === 1) {
         relationships[key] = { data: data[0] };
       } else {
