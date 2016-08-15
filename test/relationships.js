@@ -64,10 +64,34 @@ test('serialize relationship with id resolve function', async t => {
 
   const result = objSchema.serialize(obj);
 
-  console.log(result.data.relationships.elements.data);
-
   t.deepEqual(result.data.relationships.elements.data, [
     { type: 'somethings', id: 'tdcaw' },
     { type: 'somethings', id: 'oyqm' }
   ]);
+});
+
+test('serialize relationship with single object', async t => {
+  const obj = {
+    id: '5',
+    elements: [
+      { name: 'tdcaw' }
+    ],
+  };
+
+  const objSchema = new Schema({
+    type: 'objs',
+    relationships: {
+      elements: {
+        type: 'somethings',
+        id: el => el.name,
+      }
+    },
+  });
+
+  const result = objSchema.serialize(obj);
+
+  t.deepEqual(
+    result.data.relationships.elements.data,
+    { type: 'somethings', id: 'tdcaw' }
+  );
 });
