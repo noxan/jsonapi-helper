@@ -41,12 +41,18 @@ export default class Schema {
     // relationships
     const relationships = {};
     Object.keys(this.definition.relationships).forEach(key => {
-      const relationshipDefinition = this.definition.relationships[key];
+      const relationship = this.definition.relationships[key];
+      // TODO: support for definitions in relationships
+      // const relationshipDefinition = this.definition.relationships[key];
+      const relatedData = obj[key];
+      let data;
+      if (Array.isArray(relatedData)) {
+        data = relatedData.map(data => this.serializeRelationship(relationship, data));
+      } else {
+        data = this.serializeRelationship(relationship, relatedData);
+      }
       relationships[key] = {
-        data: {
-          type: relationshipDefinition.schema.definition.type,
-          id: this.resolveIdField(relationshipDefinition, obj),
-        },
+        data: data,
       };
     });
 
@@ -62,6 +68,13 @@ export default class Schema {
     }
 
     return result;
+  }
+
+  serializeRelationship(relationship, relatedData) {
+    return {
+      type: relationship.type,
+      id: this.resolveIdField(relationship, relatedData),
+    };
   }
 
   serialize(objectOrArray) {
