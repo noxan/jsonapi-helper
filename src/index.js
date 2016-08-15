@@ -10,6 +10,7 @@ export default class Schema {
       id: definition.id || 'id',
       type: definition.type,
       attributes: definition.attributes || {},
+      relationships: definition.relationships || {},
     };
   }
 
@@ -37,10 +38,42 @@ export default class Schema {
 
     const id = this.resolveIdField(this.definition, obj);
 
-    return {
+    // relationships
+    const relationships = {};
+    Object.keys(this.definition.relationships).forEach(key => {
+      const relationship = this.definition.relationships[key];
+      // TODO: support for definitions in relationships
+      // const relationshipDefinition = this.definition.relationships[key];
+      const relatedData = obj[key];
+      let data;
+      if (Array.isArray(relatedData)) {
+        data = relatedData.map(data => this.serializeRelationship(relationship, data));
+      } else {
+        data = this.serializeRelationship(relationship, relatedData);
+      }
+      relationships[key] = {
+        data: data,
+      };
+    });
+
+    const result = {
       type: this.definition.type,
       id: id,
       attributes: attributes,
+    };
+
+    // do not serialize empty object
+    if (relationships && Object.keys(relationships).length > 0) {
+      result.relationships = relationships;
+    }
+
+    return result;
+  }
+
+  serializeRelationship(relationship, relatedData) {
+    return {
+      type: relationship.type,
+      id: this.resolveIdField(relationship, relatedData),
     };
   }
 
