@@ -71,7 +71,7 @@ test('serialize relationship with id resolve function', async t => {
   ]);
 });
 
-test('serialize relationship with single object', async t => {
+test('serialize relationship with single object as array', async t => {
   const obj = {
     id: '5',
     elements: [
@@ -82,4 +82,36 @@ test('serialize relationship with single object', async t => {
   const result = objSchema.serialize(obj);
 
   t.deepEqual(result.data.relationships.elements.data, { type: 'somethings', id: 'tdcaw' });
+});
+
+test('serialize relationship with single plain object', async t => {
+  const obj = {
+    id: '5',
+    elements: { name: 'tdcaw' },
+  };
+
+  const result = objSchema.serialize(obj);
+
+  t.deepEqual(result.data.relationships.elements.data, { type: 'somethings', id: 'tdcaw' });
+});
+
+test('serialize relationship without objects', async t => {
+  const obj = {
+    id: '5',
+    elements: [],
+  };
+
+  const result = objSchema.serialize(obj);
+
+  t.deepEqual(result.data.relationships.elements.data, []);
+});
+
+test('serialize relationship without defined key in object', async t => {
+  const obj = {
+    id: '5',
+  };
+
+  const result = objSchema.serialize(obj);
+
+  t.deepEqual(result.data.relationships.elements.data, []);
 });
