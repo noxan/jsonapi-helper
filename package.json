@@ -4,8 +4,9 @@
   "description": "Prototype of a minimalistic json api serializer.",
   "main": "lib/index.js",
   "scripts": {
-    "compile": "babel -d lib/ src/",
-    "prepublish": "npm run compile",
+    "build": "babel -d lib/ src/",
+    "build:watch": "npm run build -- --watch",
+    "prepublish": "npm run build",
     "test": "ava"
   },
   "keywords": [],
