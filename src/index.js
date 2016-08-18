@@ -45,6 +45,8 @@ export default class Schema {
       // TODO: support for definitions in relationships
       // const relationshipDefinition = this.definition.relationships[key];
 
+      let relationshipIsArray = Array.isArray(obj[key]);
+
       // ensure we have an array of objects in the end or empty object if value was undefined before
       const relationshipData = Array.isArray(obj[key] || []) ? obj[key] || [] : [obj[key]];
 
@@ -54,9 +56,11 @@ export default class Schema {
         const directData = this.serializeRelationship(relationship, relationshipData, obj);
         if (directData.id) {
           data = directData;
+          relationshipIsArray = false; // FIXME: might be wrong, but we need a different api anyhow
         }
       }
-      if (data.length === 1) {
+
+      if (!relationshipIsArray && data.length === 1) {
         relationships[key] = { data: data[0] };
       } else {
         relationships[key] = { data };

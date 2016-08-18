@@ -81,7 +81,7 @@ test('serialize relationship with single object as array', async t => {
 
   const result = objSchema.serialize(obj);
 
-  t.deepEqual(result.data.relationships.elements.data, { type: 'somethings', id: 'tdcaw' });
+  t.deepEqual(result.data.relationships.elements.data, [{ type: 'somethings', id: 'tdcaw' }]);
 });
 
 test('serialize relationship with single plain object', async t => {
